@@ -1,9 +1,24 @@
 ## X.X.X
+### PaymentsUI
+* [Fixed] An issue with `STPPaymentCardTextField`, where the card params were not updated after deleting an empty sub field.
+
+### Payments
+* [Added] Support for MobilePay bindings.
+
+## 23.17.1 2023-10-09
+### PaymentSheet
+* [Fixed] Fixed an issue when advancing from the country dropdown that prevented user's' from typing in their postal code. ([#2936](https://github.com/stripe/stripe-ios/issues/2936))
+
+### PaymentsUI
+* [Fixed] An issue with `STPPaymentCardTextField`, where the `paymentCardTextFieldDidChange` delegate method wasn't being called after deleting an empty sub field.
+
+## 23.17.0 2023-10-02
 ### PaymentSheet
 * [Fixed] Fixed an issue with selecting from lists on macOS Catalyst. Note that only macOS 11 or later is supported: We do not recommend releasing a Catalyst app targeting macOS 10.15.
 * [Fixed] Fixed an issue with scanning card expiration dates.
 * [Fixed] Fixed an issue where billing address collection configuration was not passed to Apple Pay.
 * [Added] Support for Swish with PaymentIntents.
+* [Added] Support for Bacs Direct Debit with PaymentIntents.
 
 ### Basic Integration
 * [Fixed] Fixed an issue with scanning card expiration dates.
@@ -20,6 +35,7 @@
 * [Added] Support for RevolutPay bindings
 
 ### PaymentSheet
+* [Added] Support for Alipay with PaymentIntents.
 * [Added] Support for Cash App Pay with SetupIntents and PaymentIntents with `setup_future_usage`.
 * [Added] Support for AU BECS Debit with SetupIntents.
 * [Added] Support for OXXO with PaymentIntents.

@@ -132,7 +132,8 @@ class AddPaymentMethodViewModel: ObservableViewModel {
             paymentMethod: paymentMethodTypeSelectorViewModel.selected,
             previousCustomerInput: previousCustomerInput,
             offerSaveToLinkWhenSupported: isLinkEnabled && !(linkAccount?.isRegistered ?? false),
-            linkAccount: linkAccount
+            linkAccount: linkAccount,
+            cardBrandChoiceEligible: intent.cardBrandChoiceEligible
         ).make()
         paymentMethodFormElement.delegate = self
 
@@ -169,7 +170,8 @@ class AddPaymentMethodViewModel: ObservableViewModel {
             paymentMethod: type,
             previousCustomerInput: previousCustomerInput,
             offerSaveToLinkWhenSupported: shouldOfferLinkSignup,
-            linkAccount: linkAccount
+            linkAccount: linkAccount,
+            cardBrandChoiceEligible: intent.cardBrandChoiceEligible
         ).make()
         formElement.delegate = self
         return formElement

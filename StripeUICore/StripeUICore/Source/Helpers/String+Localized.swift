@@ -240,6 +240,16 @@ import Foundation
             "Error string displayed to user when they have entered an incomplete BSB number.")
     }
 
+    static var invalidSortCodeEntered: String {
+        STPLocalizedString(
+            "The sort code you entered is invalid.",
+            "Error string displayed to user when they have entered an invalid 'sort code' (a bank routing number used in the UK and Ireland)")
+    }
+
+    static var incompleteAccountNumber: String {
+        STPLocalizedString("The account number you entered is incomplete.", "Error description for incomplete account number")
+    }
+
     static var removeBankAccountEndingIn: String {
         STPLocalizedString(
             "Remove bank account ending in %@",
@@ -316,5 +326,11 @@ import Foundation
 
     static var invalid_blik_code: String {
         STPLocalizedString("Your BLIK code is invalid.", "Error message when BLIK code is invalid")
+    }
+
+    // MARK: - Card brand choice
+
+    static var card_brand_dropdown_placeholder: String {
+        STPLocalizedString("Select card brand (optional)", "Message when a user is selecting a card brand in a dropdown")
     }
 }
