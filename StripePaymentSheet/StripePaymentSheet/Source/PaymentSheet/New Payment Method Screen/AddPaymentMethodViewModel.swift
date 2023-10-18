@@ -22,6 +22,7 @@ class AddPaymentMethodViewModel: ObservableViewModel {
     private var usBankAccountFormElement: USBankAccountPaymentMethodElement?
     private(set) var paymentMethodFormElement: PaymentMethodElement {
         didSet {
+            error = nil
             notifier.notify()
         }
     }
@@ -38,11 +39,7 @@ class AddPaymentMethodViewModel: ObservableViewModel {
         }
     }
 
-    private(set) var error: Error? {
-        didSet {
-            notifier.notify()
-        }
-    }
+    private(set) var error: Error?
 
     var paymentOption: PaymentOption? {
         if let linkEnabledElement = paymentMethodFormElement as? LinkEnabledPaymentMethodElement {
@@ -230,14 +227,17 @@ class AddPaymentMethodViewModel: ObservableViewModel {
             error in
             guard error == nil else {
                 self?.error = error
+                self?.notifier.notify()
                 return
             }
             guard let financialConnectionsResult = result else {
                 self?.error = genericError
+                self?.notifier.notify()
                 return
             }
 
             self?.error = nil
+            self?.notifier.notify()
             switch financialConnectionsResult {
             case .cancelled:
                 break
@@ -245,6 +245,7 @@ class AddPaymentMethodViewModel: ObservableViewModel {
                 usBankAccountPaymentMethodElement.setLinkedBank(linkedBank)
             case .failed:
                 self?.error = genericError
+                self?.notifier.notify()
             }
         }
         switch intent {
@@ -295,6 +296,7 @@ extension AddPaymentMethodViewModel: ElementDelegate {
     }
 
     func didUpdate(element: Element) {
+        error = nil
         notifier.notify()
     }
 }
