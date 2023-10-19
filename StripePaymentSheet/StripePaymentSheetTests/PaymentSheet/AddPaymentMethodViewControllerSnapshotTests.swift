@@ -8,9 +8,9 @@
 import iOSSnapshotTestCase
 import StripeCoreTestUtils
 @_spi(STP) @testable import StripePaymentSheet
+@testable import StripePaymentsTestUtils
 @_spi(STP) @testable import StripeUICore
 import XCTest
-@testable import StripePaymentsTestUtils
 
 final class AddPaymentMethodViewControllerSnapshotTests: FBSnapshotTestCase {
     override func setUp() {
@@ -29,11 +29,11 @@ final class AddPaymentMethodViewControllerSnapshotTests: FBSnapshotTestCase {
         // Given the customer previously entered card details...
         let previousCustomerInput = IntentConfirmParams.init(
             params: .paramsWith(card: STPFixtures.paymentMethodCardParams(), billingDetails: STPFixtures.paymentMethodBillingDetails(), metadata: nil),
-            type: .card
+            type: .stripe(.card)
         )
         previousCustomerInput.saveForFutureUseCheckboxState = .selected
         // ...and the card doesn't show up *first* in the list (so we can exercise the code that switches to the previously entered pm form)...
-        let intent = Intent.paymentIntent(STPFixtures.paymentIntent(paymentMethodTypes: ["paypal", "card", "cashApp"]))
+        let intent = Intent.paymentIntent(STPFixtures.paymentIntent(paymentMethodTypes: ["paypal", "card"]))
         var config = PaymentSheet.Configuration._testValue_MostPermissive()
         // ...and a "Save this card" checkbox...
         config.customer = .init(id: "id", ephemeralKeySecret: "ek")
