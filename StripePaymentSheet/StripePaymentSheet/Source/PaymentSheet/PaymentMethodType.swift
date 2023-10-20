@@ -18,8 +18,8 @@ extension PaymentSheet {
         case externalPayPal // TODO(yuki): Replace this when we support more EPMs
         static var analyticLogForIcon: Set<PaymentMethodType> = []
         static let analyticLogForIconSemaphore = DispatchSemaphore(value: 1)
-
-        init(from str: String) {
+        
+        fileprivate init(from str: String) {
             if str == "external_paypal" {
                 self = .externalPayPal
             } else {
@@ -92,6 +92,7 @@ extension PaymentSheet {
         /// If the image is not immediately available, the updateHandler will be called if we are able
         /// to download the image.
         func makeImage(forDarkBackground: Bool = false, updateHandler: DownloadManager.UpdateImageHandler?) -> UIImage {
+            // TODO: Refactor this out of PaymentMethodType. Users shouldn't have to convert STPPaymentMethodType to PaymentMethodType in order to get its image.
             // First, try to fetch the image from the spec
             let name = identifier // Or should this be string(from:) or something else?
             if let spec = FormSpecProvider.shared.formSpec(for: name),
@@ -186,8 +187,8 @@ extension PaymentSheet {
                 return availabilityStatus == .supported
             }
 
-            // TODO: Use init that takes an STPPaymentMethodType directly?
-            var allPaymentMethodTypes: [PaymentMethodType] = recommendedPaymentMethodTypes.map { .init(from: STPPaymentMethod.string(from: $0) ?? "unknown") }
+            // Now that we have all our Stripe PaymentMethod types, we'll add external payment method types.
+            var allPaymentMethodTypes: [PaymentMethodType] = recommendedPaymentMethodTypes.map { .stripe($0) }
 
             // TODO(yuki): Rewrite this when we support more EPMs
             // Add external_paypal if...
@@ -418,32 +419,19 @@ extension STPPaymentMethod {
             supportedPaymentMethods: PaymentSheet.supportedPaymentMethods
         ) == .supported
     }
-
-    // TODO: Refactor users to call init from STPPaymentMethodType
-    func paymentSheetPaymentMethodType() -> PaymentSheet.PaymentMethodType {
-        let typeString = STPPaymentMethod.string(from: self.type) ?? "unknown"
-        return .init(from: typeString)
-    }
 }
 
 extension STPPaymentMethodParams {
-    // TODO: Refactor users to call init from STPPaymentMethodType
-    func paymentSheetPaymentMethodType() -> PaymentSheet.PaymentMethodType {
-        let typeString = STPPaymentMethod.string(from: self.type) ?? "unknown"
-        return .init(from: typeString)
-    }
 
     var paymentSheetLabel: String {
         switch type {
+        case .unknown:
+            assertionFailure()
+            return rawTypeString ?? ""
         case .card:
             return "••••\(card?.last4 ?? "")"
         default:
-            if self.type == .unknown, let rawTypeString = rawTypeString {
-                let paymentMethodType = PaymentSheet.PaymentMethodType(from: rawTypeString)
-                return paymentMethodType.displayName
-            } else {
-                return label
-            }
+            return label
         }
     }
 }
