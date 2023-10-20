@@ -20,7 +20,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
 
     func testCard_AutomaticFields_NoDefaults() {
         let configuration = PaymentSheet.Configuration()
-        let factory = factory(for: .stripe(.card), configuration: configuration)
+        let factory = factory(for: .card, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -38,7 +38,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         )
         var configuration = PaymentSheet.Configuration()
         configuration.defaultBillingDetails.address = defaultAddress
-        let factory = factory(for: .stripe(.card), configuration: configuration)
+        let factory = factory(for: .card, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -51,7 +51,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .always
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
-        let factory = factory(for: .stripe(.card), configuration: configuration)
+        let factory = factory(for: .card, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -76,7 +76,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .always
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
-        let factory = factory(for: .stripe(.card), configuration: configuration)
+        let factory = factory(for: .card, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -89,7 +89,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .never
         configuration.billingDetailsCollectionConfiguration.phone = .never
         configuration.billingDetailsCollectionConfiguration.address = .never
-        let factory = factory(for: .stripe(.card), configuration: configuration)
+        let factory = factory(for: .card, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -102,7 +102,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .never
         configuration.billingDetailsCollectionConfiguration.phone = .never
         configuration.billingDetailsCollectionConfiguration.address = .never
-        let factory = factory(for: .stripe(.card), configuration: configuration)
+        let factory = factory(for: .card, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -111,7 +111,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
 
     func testUSBankAccount_AutomaticFields_NoDefaults() {
         let configuration = PaymentSheet.Configuration()
-        let factory = factory(for: .stripe(.USBankAccount), configuration: configuration)
+        let factory = factory(for: .USBankAccount, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -123,7 +123,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.defaultBillingDetails.name = "Jane Doe"
         configuration.defaultBillingDetails.email = "foo@bar.com"
         configuration.billingDetailsCollectionConfiguration.attachDefaultsToPaymentMethod = true
-        let factory = factory(for: .stripe(.USBankAccount), configuration: configuration)
+        let factory = factory(for: .USBankAccount, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -136,7 +136,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .always
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
-        let factory = factory(for: .stripe(.USBankAccount), configuration: configuration)
+        let factory = factory(for: .USBankAccount, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -161,7 +161,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .always
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
-        let factory = factory(for: .stripe(.USBankAccount), configuration: configuration)
+        let factory = factory(for: .USBankAccount, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -177,7 +177,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .never
         configuration.billingDetailsCollectionConfiguration.phone = .never
         configuration.billingDetailsCollectionConfiguration.address = .never
-        let factory = factory(for: .stripe(.USBankAccount), configuration: configuration)
+        let factory = factory(for: .USBankAccount, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -186,7 +186,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
 
     func testUpi_AutomaticFields() {
         let configuration = PaymentSheet.Configuration()
-        let factory = factory(for: .stripe(.UPI), configuration: configuration)
+        let factory = factory(for: .UPI, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -199,7 +199,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .always
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
-        let factory = factory(for: .stripe(.UPI), configuration: configuration)
+        let factory = factory(for: .UPI, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -224,7 +224,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .always
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
-        let factory = factory(for: .stripe(.UPI), configuration: configuration)
+        let factory = factory(for: .UPI, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -238,7 +238,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.email = .always
         configuration.billingDetailsCollectionConfiguration.phone = .never
         configuration.billingDetailsCollectionConfiguration.address = .never
-        let factory = factory(for: .stripe(.UPI), configuration: configuration)
+        let factory = factory(for: .UPI, configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
         view.autosizeHeight(width: 375)
@@ -250,7 +250,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
 
         let configuration = PaymentSheet.Configuration()
         let factory = factory(
-            for: .stripe(.afterpayClearpay),
+            for: .afterpayClearpay,
             configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
@@ -267,7 +267,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
         let factory = factory(
-            for: .stripe(.afterpayClearpay),
+            for: .afterpayClearpay,
             configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
@@ -296,7 +296,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
         let factory = factory(
-            for: .stripe(.afterpayClearpay),
+            for: .afterpayClearpay,
             configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
@@ -313,7 +313,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.phone = .never
         configuration.billingDetailsCollectionConfiguration.address = .never
         let factory = factory(
-            for: .stripe(.afterpayClearpay),
+            for: .afterpayClearpay,
             configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
@@ -326,7 +326,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
 
         let configuration = PaymentSheet.Configuration()
         let factory = factory(
-            for: .stripe(.klarna),
+            for: .klarna,
             configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
@@ -343,7 +343,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
         let factory = factory(
-            for: .stripe(.klarna),
+            for: .klarna,
             configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
@@ -372,7 +372,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.phone = .always
         configuration.billingDetailsCollectionConfiguration.address = .full
         let factory = factory(
-            for: .stripe(.klarna),
+            for: .klarna,
             configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
@@ -389,7 +389,7 @@ final class PaymentSheetFormFactorySnapshotTest: FBSnapshotTestCase {
         configuration.billingDetailsCollectionConfiguration.phone = .never
         configuration.billingDetailsCollectionConfiguration.address = .never
         let factory = factory(
-            for: .stripe(.klarna),
+            for: .klarna,
             configuration: configuration)
         let formElement = factory.make()
         let view = formElement.view
@@ -416,14 +416,14 @@ extension PaymentSheetFormFactorySnapshotTest {
     }
 
     private func factory(
-        for paymentMethodType: PaymentSheet.PaymentMethodType,
+        for paymentMethodType: STPPaymentMethodType,
         configuration: PaymentSheet.Configuration
     ) -> PaymentSheetFormFactory {
-        let paymentIntent = STPFixtures.makePaymentIntent(paymentMethodTypes: [paymentMethodType.stpPaymentMethodType!])
+        let paymentIntent = STPFixtures.makePaymentIntent(paymentMethodTypes: [paymentMethodType])
         return PaymentSheetFormFactory(
             intent: .paymentIntent(paymentIntent),
             configuration: .paymentSheet(configuration),
-            paymentMethod: paymentMethodType,
+            paymentMethod: .stripe(paymentMethodType),
             addressSpecProvider: usAddressSpecProvider()
         )
     }
