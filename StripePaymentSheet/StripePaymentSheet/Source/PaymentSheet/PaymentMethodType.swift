@@ -62,10 +62,21 @@ extension PaymentSheet {
         /// to download the image.
         func makeImage(forDarkBackground: Bool = false, updateHandler: DownloadManager.UpdateImageHandler?) -> UIImage {
             // TODO: Refactor this out of PaymentMethodType. Users shouldn't have to convert STPPaymentMethodType to PaymentMethodType in order to get its image.
-            // First, try to fetch the image from the spec
-            if let spec = FormSpecProvider.shared.formSpec(for: identifier),
-               let selectorIcon = spec.selectorIcon,
-               var imageUrl = URL(string: selectorIcon.lightThemePng)
+            // Get the client-side asset first
+            let localImage = {
+                switch self {
+                case .stripe(let stpPaymentMethodType):
+                    return stpPaymentMethodType.makeImage(forDarkBackground: forDarkBackground)
+                case .externalPayPal:
+                    return STPPaymentMethodType.payPal.makeImage(forDarkBackground: forDarkBackground)
+                }
+            }()
+            // Next, try to download the image from the spec if possible
+            if
+                FormSpecProvider.shared.isLoaded,
+                let spec = FormSpecProvider.shared.formSpec(for: identifier),
+                let selectorIcon = spec.selectorIcon,
+                var imageUrl = URL(string: selectorIcon.lightThemePng)
             {
                 if forDarkBackground,
                     let darkImageString = selectorIcon.darkThemePng,
@@ -76,24 +87,21 @@ extension PaymentSheet {
                 if PaymentSheet.PaymentMethodType.shouldLogAnalytic(paymentMethod: self) {
                     STPAnalyticsClient.sharedClient.logImageSelectorIconDownloadedIfNeeded(paymentMethod: self)
                 }
-                return DownloadManager.sharedManager.downloadImage(url: imageUrl, updateHandler: updateHandler)
-            }
-            // Otherwise, use client assets
-            switch self {
-            case .stripe(let stpPaymentMethodType):
-                if stpPaymentMethodType != .unknown {
-                    if PaymentSheet.PaymentMethodType.shouldLogAnalytic(paymentMethod: self) {
-                        STPAnalyticsClient.sharedClient.logImageSelectorIconFromBundleIfNeeded(paymentMethod: self)
-                    }
-                    return stpPaymentMethodType.makeImage(forDarkBackground: forDarkBackground)
-                } else {
-                    if PaymentSheet.PaymentMethodType.shouldLogAnalytic(paymentMethod: self) {
-                        STPAnalyticsClient.sharedClient.logImageSelectorIconNotFoundIfNeeded(paymentMethod: self)
-                    }
-                    return DownloadManager.sharedManager.imagePlaceHolder()
+                // If there's a form spec, download the spec's image, using the local image as a placeholder until it loads
+                return DownloadManager.sharedManager.downloadImage(url: imageUrl, placeholder: localImage, updateHandler: updateHandler)
+            } else if let localImage {
+                if PaymentSheet.PaymentMethodType.shouldLogAnalytic(paymentMethod: self) {
+                    STPAnalyticsClient.sharedClient.logImageSelectorIconFromBundleIfNeeded(paymentMethod: self)
                 }
-            case .externalPayPal:
-                return STPPaymentMethodType.payPal.makeImage(forDarkBackground: forDarkBackground)
+                // If there's no form spec, return the local image if it exists
+                return localImage
+            } else {
+                // If the local image doesn't exist and there's no form spec, fire an analytic and return an empty image
+                assertionFailure()
+                if PaymentSheet.PaymentMethodType.shouldLogAnalytic(paymentMethod: self) {
+                    STPAnalyticsClient.sharedClient.logImageSelectorIconNotFoundIfNeeded(paymentMethod: self)
+                }
+                return DownloadManager.sharedManager.imagePlaceHolder()
             }
         }
 
