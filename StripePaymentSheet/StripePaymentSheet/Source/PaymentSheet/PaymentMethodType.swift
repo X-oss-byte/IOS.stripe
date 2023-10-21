@@ -63,8 +63,7 @@ extension PaymentSheet {
         func makeImage(forDarkBackground: Bool = false, updateHandler: DownloadManager.UpdateImageHandler?) -> UIImage {
             // TODO: Refactor this out of PaymentMethodType. Users shouldn't have to convert STPPaymentMethodType to PaymentMethodType in order to get its image.
             // First, try to fetch the image from the spec
-            let name = identifier // Or should this be string(from:) or something else?
-            if let spec = FormSpecProvider.shared.formSpec(for: name),
+            if let spec = FormSpecProvider.shared.formSpec(for: identifier),
                let selectorIcon = spec.selectorIcon,
                var imageUrl = URL(string: selectorIcon.lightThemePng)
             {

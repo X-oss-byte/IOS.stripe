@@ -23,7 +23,7 @@ class PaymentTypeCellSnapshotTests: FBSnapshotTestCase {
 
     func testCardUnselected() {
         let cell = PaymentMethodTypeCollectionView.PaymentTypeCell()
-        cell.paymentMethodType = .card
+        cell.paymentMethodType = .stripe(.card)
         cell.frame = CGRect(
             origin: .zero,
             size: CGSize(
@@ -36,7 +36,7 @@ class PaymentTypeCellSnapshotTests: FBSnapshotTestCase {
 
     func testCardSelected() {
         let cell = PaymentMethodTypeCollectionView.PaymentTypeCell()
-        cell.paymentMethodType = .card
+        cell.paymentMethodType = .stripe(.card)
         cell.frame = CGRect(
             origin: .zero,
             size: CGSize(
@@ -51,7 +51,7 @@ class PaymentTypeCellSnapshotTests: FBSnapshotTestCase {
     func testCardUnselected_forceDarkMode() {
         let cell = PaymentMethodTypeCollectionView.PaymentTypeCell()
         cell.overrideUserInterfaceStyle = .dark
-        cell.paymentMethodType = .card
+        cell.paymentMethodType = .stripe(.card)
         cell.frame = CGRect(
             origin: .zero,
             size: CGSize(
@@ -65,7 +65,7 @@ class PaymentTypeCellSnapshotTests: FBSnapshotTestCase {
     func testCardSelected_forceDarkMode() {
         let cell = PaymentMethodTypeCollectionView.PaymentTypeCell()
         cell.overrideUserInterfaceStyle = .dark
-        cell.paymentMethodType = .card
+        cell.paymentMethodType = .stripe(.card)
         cell.frame = CGRect(
             origin: .zero,
             size: CGSize(
